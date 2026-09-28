@@ -1,0 +1,52 @@
+services:
+  influxdb:
+    image: influxdb:1.8-alpine
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      INFLUXDB_DB: global_status
+      INFLUXDB_HTTP_AUTH_ENABLED: "false"
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    healthcheck:
+      test: ["CMD", "influx", "-host", "localhost", "-execute", "SHOW DATABASES"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  collector:
+    build: ./collector
+    restart: unless-stopped
+    environment:
+      INFLUX_URL: http://influxdb:8086
+      INFLUX_DB: global_status
+      POLL_SECONDS: ${POLL_SECONDS:-600}
+      FIRMS_MAP_KEY: ${FIRMS_MAP_KEY:-}
+      GEOCODE_CACHE: /var/lib/global-status/geocode.sqlite3
+    volumes:
+      - geocode_cache:/var/lib/global-status
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:11.6.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?Define GRAFANA_PASSWORD en el archivo .env}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+volumes:
+  influxdb_data:
+  grafana_data:
+  geocode_cache:

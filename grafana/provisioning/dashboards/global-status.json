@@ -1,0 +1,1713 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "description": "Panel de seguimiento de fenómenos naturales a partir de fuentes públicas. La cobertura y frecuencia dependen de cada proveedor.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "content": "**ESTADO GLOBAL** · Monitor de fenómenos y alertas  \n_Fuentes públicas verificables · actualización cada 10 minutos_  \n_Geocodificación: © OpenStreetMap contributors_",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.6.0",
+      "title": " ",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT count(\"latitude\") FROM \"hazard_events\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Registros · periodo",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 3
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT count(\"latitude\") FROM \"hazard_events\" WHERE time > now() - 24h",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Registros · 24 h",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 4
+              },
+              {
+                "color": "red",
+                "value": 7
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 3
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT max(\"severity_score\") FROM \"hazard_events\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Severidad máxima",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 3
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT count(\"latitude\") FROM \"hazard_events\" WHERE time > now() - 30d",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Registros · 30 días",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "description": "Código de color del mapa",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 10,
+      "options": {
+        "content": "<div style=\"display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;font-size:12px;line-height:1.8\"><span style=\"white-space:nowrap\"><b style=\"color:#F97316;font-size:17px\">●</b>&nbsp;Terremoto</span><span style=\"white-space:nowrap\"><b style=\"color:#06B6D4;font-size:17px\">●</b>&nbsp;Tsunami</span><span style=\"white-space:nowrap\"><b style=\"color:#A855F7;font-size:17px\">●</b>&nbsp;Tornado</span><span style=\"white-space:nowrap\"><b style=\"color:#3B82F6;font-size:17px\">●</b>&nbsp;Ciclón tropical</span><span style=\"white-space:nowrap\"><b style=\"color:#14B8A6;font-size:17px\">●</b>&nbsp;Inundación</span><span style=\"white-space:nowrap\"><b style=\"color:#EF4444;font-size:17px\">●</b>&nbsp;Incendio forestal</span><span style=\"white-space:nowrap\"><b style=\"color:#EAB308;font-size:17px\">●</b>&nbsp;Volcán</span><span style=\"white-space:nowrap\"><b style=\"color:#A16207;font-size:17px\">●</b>&nbsp;Sequía</span></div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.6.0",
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "max": 10,
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fecha y hora"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fuente"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Código del suceso"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nivel de alerta"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fenómeno"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "OpenStreetMap",
+          "type": "osm-standard"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "name": "Halo · Terremoto",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#F97316"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Tsunami",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "B"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#06B6D4"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Tornado",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "C"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#A855F7"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Ciclón tropical",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "D"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#3B82F6"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Inundación",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "E"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#14B8A6"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Incendio forestal",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "F"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#EF4444"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Volcán",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "G"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#EAB308"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Sequía",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "H"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#A16207"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Halo · Terremoto GDACS",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "I"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": false,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 12,
+                  "min": 12,
+                  "max": 12
+                },
+                "color": {
+                  "fixed": "#F97316"
+                },
+                "opacity": 0.12,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Terremoto",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#F97316"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Tsunami",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "B"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#06B6D4"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Tornado",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "C"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#A855F7"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Ciclón tropical",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "D"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#3B82F6"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Inundación",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "E"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#14B8A6"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Incendio forestal",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "F"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#EF4444"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Volcán",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "G"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#EAB308"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Sequía",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "H"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#A16207"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          },
+          {
+            "name": "Terremoto GDACS",
+            "type": "markers",
+            "filterData": {
+              "id": "byRefId",
+              "options": "I"
+            },
+            "location": {
+              "mode": "coords",
+              "latitude": "Latitud",
+              "longitude": "Longitud"
+            },
+            "tooltip": true,
+            "config": {
+              "showLegend": false,
+              "style": {
+                "size": {
+                  "fixed": 5,
+                  "min": 5,
+                  "max": 5
+                },
+                "color": {
+                  "fixed": "#F97316"
+                },
+                "opacity": 0.98,
+                "symbol": {
+                  "mode": "fixed",
+                  "fixed": "img/icons/marker/circle.svg"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "rotation": {
+                  "fixed": 0,
+                  "min": -360,
+                  "max": 360,
+                  "mode": "mod"
+                }
+              }
+            }
+          }
+        ],
+        "tooltip": {
+          "mode": "none"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "fit",
+          "lastOnly": false,
+          "layer": "Terremoto",
+          "padding": 5,
+          "lat": 0,
+          "lon": 0,
+          "zoom": 0
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\", last(\"magnitude\") AS \"Magnitud\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Terremoto' AND \"fuente\" = 'USGS' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Tsunami' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Tornado' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Ciclón tropical' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Inundación' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Incendio forestal' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Volcán' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Sequía' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "table"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"country\") AS \"País\", last(\"city\") AS \"Ciudad o municipio\", last(\"town\") AS \"Pueblo o localidad\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"title\") AS \"Suceso y lugar\", last(\"severity_score\") AS \"Índice de importancia\" FROM \"hazard_events\" WHERE $timeFilter AND \"tipo\" = 'Terremoto' AND \"fuente\" = 'GDACS' GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "I",
+          "resultFormat": "table"
+        }
+      ],
+      "title": "Mapa mundial · color por fenómeno",
+      "type": "geomap",
+      "description": "Al pulsar un marcador, la ficha empieza por país, ciudad o municipio y pueblo. Después muestra el suceso y las coordenadas. Las localidades se completan desde fuentes públicas cuando están disponibles.",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^Time$",
+            "renamePattern": "Fecha y hora"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^fuente$",
+            "renamePattern": "Fuente"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^id_evento$",
+            "renamePattern": "Código del suceso"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^nivel_alerta$",
+            "renamePattern": "Nivel de alerta"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^tipo$",
+            "renamePattern": "Fenómeno"
+          }
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 8
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Fecha y hora"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fuente"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Organismo"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id_evento"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Identificador"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "nivel_alerta"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nivel de alerta"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tipo"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Fenómeno"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 7,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT last(\"title\") AS \"Suceso\", last(\"severity_score\") AS \"Puntuación\", last(\"latitude\") AS \"Latitud\", last(\"longitude\") AS \"Longitud\", last(\"url\") AS \"Enlace\" FROM \"hazard_events\" WHERE $timeFilter GROUP BY \"id_evento\", \"tipo\", \"fuente\", \"nivel_alerta\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table"
+        }
+      ],
+      "title": "Últimos avisos y detecciones",
+      "type": "table",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "id_evento": true,
+              "nivel_alerta": true,
+              "Puntuación": true,
+              "Latitud": true,
+              "Longitud": true,
+              "Enlace": true
+            },
+            "indexByName": {
+              "Time": 0,
+              "tipo": 1,
+              "fuente": 2,
+              "Suceso": 3
+            },
+            "renameByName": {}
+          }
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "bars",
+            "lineWidth": 1,
+            "fillOpacity": 70,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            }
+          },
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT count(\"latitude\") FROM \"hazard_events\" WHERE $timeFilter GROUP BY time($__interval), \"tipo\" fill(0)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "alias": "$tag_tipo"
+        }
+      ],
+      "title": "Actividad registrada por fenómeno",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "global-status-influx"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true
+          },
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Fecha y hora"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "tipo"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Fenómeno"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fuente"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Organismo"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "global-status-influx"
+          },
+          "query": "SELECT count(\"latitude\") AS \"Observaciones\" FROM \"hazard_events\" WHERE $timeFilter GROUP BY \"tipo\", \"fuente\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table"
+        }
+      ],
+      "title": "Registros por fenómeno y fuente",
+      "type": "table"
+    }
+  ],
+  "refresh": "10m",
+  "schemaVersion": 41,
+  "tags": [
+    "estado-global",
+    "riesgos",
+    "mapa"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5m",
+      "10m",
+      "30m",
+      "1h"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Estado Global | Monitor de sucesos",
+  "uid": "global-status",
+  "version": 1
+}

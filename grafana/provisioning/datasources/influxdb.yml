@@ -1,0 +1,13 @@
+apiVersion: 1
+datasources:
+  - name: Global Status InfluxDB
+    uid: global-status-influx
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: global_status
+    isDefault: true
+    editable: false
+    jsonData:
+      httpMode: GET
+      timeInterval: 10m

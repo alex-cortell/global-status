@@ -1,0 +1,8 @@
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__/
+*.py[cod]
+*.sqlite3
+/source/co2-celia-master/
